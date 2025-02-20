@@ -34,7 +34,7 @@ const interval = setInterval(function () {
   countdownEl.innerText = countdownCounter;
 
   if (countdownCounter === 0) {
-    console.log("counter is 0, sto i stop myself");
+    console.log("counter is 0, so i stop myself");
     ulEl.classList.add('d-none');
     countdownEl.classList.add('d-none');
     formEl.classList.remove('d-none');
@@ -52,11 +52,29 @@ buttonEl.addEventListener('click', function (e) {
   const numbersRemembered = [];
   const numbersGuessed = []
 
+  //save input elements from the user in an array
   for (let i = 0; i < inputEl.length; i++) {
     const thisNumber = Number(inputEl[i].value);
-    numbersRemembered.push(thisNumber);
+
+    //check if input is empty
+    if (inputEl[i].value === '') {
+      pEl.innerText = "Compila tutti i campi!";
+      return;
+    } else if (isNaN(thisNumber)) {
+      //check if user insert something not a number
+      pEl.innerText = "Hai inserito qualcosa diverso da un numero, riprova!";
+      return;
+    } else if (numbersRemembered.includes(thisNumber)) {
+      //check if user insert something duplicate
+      pEl.innerText = "Hai inserito 2 o più numeri uguali, riprova inserendo numeri diversi!";
+      return;
+    } else {
+      //insert the user number in the array
+      numbersRemembered.push(thisNumber);
+    }
   }
 
+  //check how many elements the user has guessed
   for (let i = 0; i < numbersRemembered.length; i++) {
     const element = numbersRemembered[i];
     if (numbersToRemember.includes(element)) {
@@ -68,6 +86,8 @@ buttonEl.addEventListener('click', function (e) {
   pEl.innerText = `Hai indovinato ${counter} numeri su 5! Numeri generati: ${numbersToRemember}, Numeri indovinati: ${numbersGuessed}`;
 
 })
+
+
 
 
 
