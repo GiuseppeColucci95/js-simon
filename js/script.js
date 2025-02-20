@@ -11,7 +11,7 @@ const instructionsEl = document.getElementById('instructions');
 console.log(countdownEl, ulEl, formEl, pEl, buttonEl, inputEl);
 
 //create useful variables
-let countdownCounter = 3;
+let countdownCounter = 30;
 //generate random numbers
 const numbersToRemember = randomNumber(5, 1, 50);
 console.log(numbersToRemember);
