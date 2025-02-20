@@ -5,23 +5,25 @@ const formEl = document.getElementById('answers-form');
 const inputEl = document.querySelectorAll('input');
 const pEl = document.getElementById('message');
 const buttonEl = document.querySelector('button');
+const instructionsEl = document.getElementById('instructions');
 
 //print the DOM elements in console
 console.log(countdownEl, ulEl, formEl, pEl, buttonEl, inputEl);
 
 //create useful variables
 let countdownCounter = 3;
-const numbersToRemember = [];
+//generate random numbers
+const numbersToRemember = randomNumber(5, 1, 50);
+console.log(numbersToRemember);
+
 
 //modify elements of the page
 countdownEl.innerText = countdownCounter;
 for (let i = 0; i < inputEl.length; i++) {
-  //generate random number
-  const number = randomNumber(5, 1, 50);
 
   //create li element and add inside ul element of the page
   const liElement = document.createElement('li');
-  liElement.innerText = number[i];
+  liElement.innerText = numbersToRemember[i];
   ulEl.appendChild(liElement);
 }
 
@@ -32,13 +34,40 @@ const interval = setInterval(function () {
   countdownEl.innerText = countdownCounter;
 
   if (countdownCounter === 0) {
-    console.log("sono arrivato a 0");
+    console.log("counter is 0, sto i stop myself");
+    ulEl.classList.add('d-none');
+    countdownEl.classList.add('d-none');
+    formEl.classList.remove('d-none');
+    instructionsEl.innerText = "Ora inserisci i numeri che ricordi!"
     clearInterval(interval);
   }
 
 }, 1000);
 
+//add event listener to the button
+buttonEl.addEventListener('click', function (e) {
+  e.preventDefault();
 
+  let counter = 0;
+  const numbersRemembered = [];
+  const numbersGuessed = []
+
+  for (let i = 0; i < inputEl.length; i++) {
+    const thisNumber = Number(inputEl[i].value);
+    numbersRemembered.push(thisNumber);
+  }
+
+  for (let i = 0; i < numbersRemembered.length; i++) {
+    const element = numbersRemembered[i];
+    if (numbersToRemember.includes(element)) {
+      counter++;
+      numbersGuessed.push(element);
+    }
+  }
+
+  pEl.innerText = `Hai indovinato ${counter} numeri su 5! Numeri generati: ${numbersToRemember}, Numeri indovinati: ${numbersGuessed}`;
+
+})
 
 
 
