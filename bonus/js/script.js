@@ -11,7 +11,7 @@ const instructionsEl = document.getElementById('instructions');
 console.log(countdownEl, ulEl, formEl, pEl, buttonEl, inputEl);
 
 //create useful variables
-let countdownCounter = 30;
+let countdownCounter = 3;
 //generate random numbers
 const numbersToRemember = randomNumber(5, 1, 50);
 console.log(numbersToRemember);
@@ -68,11 +68,17 @@ buttonEl.addEventListener('click', function (e) {
       //check if user insert something duplicate
       pEl.innerText = "Hai inserito 2 o più numeri uguali, riprova inserendo numeri diversi!";
       return;
+    } else if (numbersToRemember.includes(thisNumber) && numbersToRemember.indexOf(thisNumber) !== i) {
+      console.log(numbersToRemember.indexOf(thisNumber), i);
+      pEl.innerText = `Il numero che hai inserito in posizione ${i + 1} non è nella posizione corretta!`;
+      return;
     } else {
       //insert the user number in the array
       numbersRemembered.push(thisNumber);
     }
   }
+
+
 
   //check how many elements the user has guessed
   for (let i = 0; i < numbersRemembered.length; i++) {
